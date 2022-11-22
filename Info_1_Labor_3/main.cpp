@@ -1,22 +1,32 @@
-#include <iostream>;
+/*
+Titel: Informatik 1 Labor 3: Paarweiser Vergleich
+Beschreibung:	Prioritätenanalyse über die Komandozeile erstellt werden. Eine maximal anzahl an von 10 Kriterien und
+				die berechung von Summen für jedes Kriterium und ein Gewichtungsfaktor in %. Ausgabe in einer Tabelle.
+Name:			Thomas Kühnel
+Datum:			20.11.2022
+*/
+
+#include <string>
+#include <iostream>;		//Bibliotheken einbindung
 using namespace std;
 
+string nutzereingabe;		//Variable für die Nutzereingabe der Kriterien
+string kriterien[10];		//Array der eingegebenen Kriterien
 
-string kriterien[10];
-int ergebnis[10][10];
-float sums[10];
-float gf[10];
-string nutzereingabe;
-int eingabeint;
-int kl = 10;
+int ergebnis[10][10];		//Array der eingegebenen Bewertung
 
+float sums[10];				//Ergebnisse der Berechnuggen pro Krieterium als Summe
+float gf[10];				//Ergebnisse der Berechnuggen pro Krieterium als %
+
+int eingabeint;				//Variable für die Nutzereingabe der Bewertung
+int kl = 10;				//Maximale anzahl an Kriterien
 
 
 void clacsumsweights() {
 	for (int m = 0; m <= kl; m++) {
 		for (int n = 0; n <= kl; n++) {
 			cout << ergebnis[m][n] << "    ";
-		}
+		}											//Ausgabe der Berechnung
 		cout << "    " << sums[m];
 		cout << "    " << gf[m];
 		cout << endl;
@@ -29,11 +39,11 @@ void main() {
 
 		cout << "Kriterium " << i + 1 << " --> ";
 
-		cin >> nutzereingabe;
-
+		cin >> nutzereingabe;					//Nutzer eingabe der Kriterien und 
+												
 
 		if (nutzereingabe == "0") {
-			kl = i - 1;
+			kl = i - 1;							//das Zählen der max Kriterien
 			break;
 		}
 		kriterien[i] = nutzereingabe;
@@ -42,21 +52,21 @@ void main() {
 	cout << "bewerten sie die Kriterien mit 0 / 1 / 2" << endl;
 
 
-	for (int m = 0; m <= kl; m++) {
-
+	for (int m = 0; m <= kl; m++) {					//Paarweiser Vergleich der Kriterien
+												
 		for (int n = m + 1; n <= kl; n++) {
 
-			cout << kriterien[m] << " <-> " << kriterien[n] << ": ";
+			cout << kriterien[m] << " <-> " << kriterien[n] << ": ";	//Ausgabe der Vergleiche 
 
-			cin >> eingabeint;
+			cin >> eingabeint;				//Eingabe der bewertung vom Nutzer
 
-			ergebnis[m][n] = eingabeint;
+			ergebnis[m][n] = eingabeint;	//Eintragen in das Ergebnis Array
 
-			if (eingabeint == 0)
+			if (eingabeint == 0)			
 				ergebnis[n][m] = 2;
 
-			if (eingabeint == 1)
-				ergebnis[n][m] = 1;
+			if (eingabeint == 1)			//Abfragen für die gespiegelte bewertung
+				ergebnis[n][m] = 1;			//Eintragen der gespeigelten bewertung
 
 			if (eingabeint == 2)
 				ergebnis[n][m] = 0;
@@ -67,9 +77,9 @@ void main() {
 
 	for (int m = 0; m <= kl; m++) {
 
-		for (int n = 0; n <= kl; n++) {
+		for (int n = 0; n <= kl; n++) {			
 
-			sums[m] += ergebnis[m][n];
+			sums[m] = sums[m] + ergebnis[m][n];		//Berechene und Eintragen der ergebnisse in das sums Array
 		}
 	}
 
@@ -79,9 +89,9 @@ void main() {
 
 		for (int n = 0; n <= kl; n++)
 
-			sumstemp += sums[n];
+			sumstemp = sumstemp + sums[n];
 
-		gf[m] = sums[m] * 100 / sumstemp;
+		gf[m] = sums[m] * 100 / sumstemp;			//Berechene und Eintragen der ergebnisse in das GF Array
 	}
 
 	clacsumsweights();
